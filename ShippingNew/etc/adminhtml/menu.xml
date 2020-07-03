@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Excellence. All rights reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../Backend/etc/menu.xsd">
+    <menu>
+        <add id="Excellence_ShippingNew::excellence_shipping_index" title="my menu" module="Excellence_ShippingNew"  sortOrder="20" dependsOnModule="Excellence_ShippingNew" action="shippingnew/shipping/index" resource="Excellence_ShippingNew::excellence_shipping_index"/>
+<!--AddMenu-->
+    </menu>
+</config>

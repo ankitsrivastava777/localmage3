@@ -1,0 +1,11 @@
+Hello index/index.phtml
+
+<?php
+
+$block->test();
+
+$helper = $this->helper('Excellence\ShippingMessage\Helper\Data');
+$values = $helper->getShippingMessage();
+
+echo $values;
+?>
