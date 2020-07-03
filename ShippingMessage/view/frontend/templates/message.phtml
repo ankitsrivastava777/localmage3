@@ -1,0 +1,66 @@
+<?php
+$helper = $this->helper('Excellence\ShippingMessage\Helper\Data');
+$baseUrl = $helper->getBaseUrl();
+$enableModule = $helper->getExcludedSKu();
+if ($enableModule) :
+?>
+    <script>
+        require(['jquery'], function($) {
+            var d = '<?= $message ?>';
+            console.log('welcome2');
+            $(window).on('load', function() {
+                setTimeout(function() {
+                    var countryId = $('select[name="country_id"]').val();
+                    console.log(countryId);
+                    console.log('coutry');
+                    if (countryId != '') {
+                        var fetchData = '<?= $baseUrl ?>' + 'fetchmsg/fetch/index';
+                        $.ajax({
+                            type: 'POST',
+                            url: fetchData,
+                            showLoader: true,
+                            data: {
+                                'countryCode': countryId,
+                            },
+                            cache: false,
+                            success: function(response) {
+                                console.log(response);
+                                if (response) {
+                                    $('#custom_msg').show();
+                                } else {
+                                    $('#custom_msg').hide();
+                                }
+                            }
+                        });
+                    }
+                }, 10000);
+                $(document).on('change', 'select[name="country_id"]', function() {
+                    var countryId = $('select[name="country_id"]').val();
+                    if (countryId != '') {
+                        var d = '<?= $message ?>';
+                        '<?= $baseUrl ?>' + 'fetchmsg/fetch/index';
+                        $.ajax({
+                            type: 'POST',
+                            url: fetchData,
+                            showLoader: true,
+                            data: {
+                                'countryCode': countryId,
+                            },
+                            cache: false,
+                            success: function(response) {
+                                console.log(response);
+                                if (response) {
+                                    $('#custom_msg').show();
+                                } else {
+                                    $('#custom_msg').hide();
+                                }
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+<?php endif; ?>
+
+<script>
