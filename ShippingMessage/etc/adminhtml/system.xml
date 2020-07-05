@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../Config/etc/system_file.xsd">
+    <system>
+        <tab id="testnegative" translate="label" sortOrder="100">
+            <label>Custom Shipping Message</label>
+        </tab>
+        <section id="testnegative" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Shipping Message</label>
+            <tab>testnegative</tab>
+            <resource>Excellence_ShippingMessage::testnegative</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>General Settings</label>
+                <field id="enable" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Shipping Message Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[Please Select from Drop-Down to show custom shipping Message on Product Page.]]></comment>
+                </field>
+            </group>
+            <group id="international_cartrule" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>International Cart Settings</label>
+                <field id="enable" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Enable Internatinal Cart Rule</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[Please Select from Drop-Down to enable this module functionality.]]></comment>
+                </field>
+                <field id="sku" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Product Sku</label>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                    <comment><![CDATA[Enter the Product Sku]]></comment>
+                </field>
+                <field id="shippingmessage" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Shipping Method Message</label>
+                    <depends>
+                        <field id="enable1">1</field>
+                    </depends>
+                    <comment><![CDATA[Enter the message to display on shipping method]]></comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

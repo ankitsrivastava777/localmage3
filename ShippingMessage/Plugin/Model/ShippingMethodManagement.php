@@ -9,16 +9,24 @@ class ShippingMethodManagement {
         
         \Excellence\ShippingMessage\Helper\Data $dataHelper
         
-    ) {  
+    ) {
+        
         $this->dataHelper = $dataHelper;
+        
     }
-    public function afterEstimateByExtendedAddress($output)
+    public function afterEstimateByExtendedAddress($shippingMethodManagement, $output)
     {
         return $this->filterOutput($output);
     }
     public function filterOutput($output)
     {
         $helper = $this->dataHelper->checkSkuValid();
+        $free = [];
+        foreach ($output as $shippingMethod) {
+            if ($shippingMethod->getCarrierCode() == 'freeshipping' && $shippingMethod->getMethodCode() == 'freeshipping') {
+                $free[] = $shippingMethod;
+            }
+        }
         if ($helper) {
             return false;
         }

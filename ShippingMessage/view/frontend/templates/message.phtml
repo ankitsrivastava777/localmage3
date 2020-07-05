@@ -1,66 +1,80 @@
-<?php
+<?php 
 $helper = $this->helper('Excellence\ShippingMessage\Helper\Data');
+$message = $helper->checkSkuValid();
 $baseUrl = $helper->getBaseUrl();
 $enableModule = $helper->getExcludedSKu();
-if ($enableModule) :
+// echo $helper->checkSkuValid();
+// die('kmkmkm');
+// echo $message;
+if($enableModule):
 ?>
-    <script>
-        require(['jquery'], function($) {
-            var d = '<?= $message ?>';
-            console.log('welcome2');
-            $(window).on('load', function() {
-                setTimeout(function() {
-                    var countryId = $('select[name="country_id"]').val();
+
+<script>
+    require(['jquery'], function($) {
+        var d = '<?= $message?>';
+        console.log('welcome2');
+        $(window).on('load', function(){
+            setTimeout(function() {
+                var countryId = $('select[name="country_id"]').val();
                     console.log(countryId);
                     console.log('coutry');
-                    if (countryId != '') {
-                        var fetchData = '<?= $baseUrl ?>' + 'fetchmsg/fetch/index';
+                    if(countryId != ''){
+                        var fetchData = '<?= $baseUrl?>'+'fetchmsg/fetch/index';
                         $.ajax({
-                            type: 'POST',
+                            type:'POST',
                             url: fetchData,
                             showLoader: true,
-                            data: {
+                            data: { 
                                 'countryCode': countryId,
                             },
                             cache: false,
-                            success: function(response) {
+                            success: function(response){
                                 console.log(response);
-                                if (response) {
+                                if(response){
                                     $('#custom_msg').show();
-                                } else {
+                                }else{
                                     $('#custom_msg').hide();
                                 }
+                                // $("#results").append(reponse);
                             }
                         });
                     }
-                }, 10000);
-                $(document).on('change', 'select[name="country_id"]', function() {
+            }, 5000);
+
+            $(document).on('change','select[name="country_id"]',function(){
                     var countryId = $('select[name="country_id"]').val();
-                    if (countryId != '') {
-                        var d = '<?= $message ?>';
-                        '<?= $baseUrl ?>' + 'fetchmsg/fetch/index';
+                    if(countryId != ''){
+                        var d = '<?= $message?>';
+                        // if(d){
+                        //             $('#custom_msg').show();
+                        //         }else{
+                        //             $('#custom_msg').hide();
+                        //         }
+                        var fetchData = '<?= $baseUrl?>'+'fetchmsg/fetch/index';
                         $.ajax({
-                            type: 'POST',
+                            type:'POST',
                             url: fetchData,
                             showLoader: true,
-                            data: {
+                            data: { 
                                 'countryCode': countryId,
                             },
                             cache: false,
-                            success: function(response) {
+                            success: function(response){
                                 console.log(response);
-                                if (response) {
+                                if(response){
                                     $('#custom_msg').show();
-                                } else {
+                                }else{
                                     $('#custom_msg').hide();
                                 }
+                                // $("#results").append(reponse);
                             }
                         });
                     }
                 });
-            });
+            // console.log(jQuery('select[name="country_id"]').val());
         });
-    </script>
-<?php endif; ?>
+    });
+</script>
+<?php endif;?>
 
 <script>
