@@ -8,7 +8,7 @@ use Magento\Checkout\Model\Session;
 
 class Data extends AbstractHelper
 {
-    /**
+   /**
      * @var Magento\Checkout\Model\Session
      */
     protected $_checkoutSession;
@@ -31,74 +31,81 @@ class Data extends AbstractHelper
         $this->_cart = $cart;
         $this->_storeManager = $storeManager;
     }
+
+    // public function getTotalMessage()
+    // {
+    //     $quote = $this->_checkoutSession->getQuote();
+
+    //     if ($quote->getSubtotal() < 135) {
+    //       return __('Increase your cart value to $135 and enjoy free shipping.');
+    //     }
+    //     return false;
+    // }
+    // function To Get config Value 
     public function getConfigValue($code)
-    {
+	{   
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-        return $objectManager->create('\Magento\Framework\App\Config\ScopeConfigInterface')->getValue(self::CUSTOM_SHIPPING_MESSAGE . 'general/' . $code, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+        return $objectManager->create('\Magento\Framework\App\Config\ScopeConfigInterface')->getValue(self::CUSTOM_SHIPPING_MESSAGE.'general/'. $code, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
     public function getInternationalSkuConfigVal($code)
-    {
+	{   
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-        return $objectManager->create('\Magento\Framework\App\Config\ScopeConfigInterface')->getValue(self::CUSTOM_SHIPPING_MESSAGE . 'international_cartrule/' . $code, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+        return $objectManager->create('\Magento\Framework\App\Config\ScopeConfigInterface')->getValue(self::CUSTOM_SHIPPING_MESSAGE.'international_cartrule/'. $code, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
-    function getExcludedSKu()
-    {
+    function getExcludedSKu(){
         $Enable = $this->getInternationalSkuConfigVal('enable');
-        if ($Enable) {
+        if($Enable){
             $excludedSkus = explode(',', $this->getInternationalSkuConfigVal('sku'));
             return $excludedSkus;
-        } else {
+        }else{
             return false;
         }
     }
-    function checkSkuValid()
-    {
+    function checkSkuValid(){
         $sku = $this->getExcludedSKu();
-        if ($sku && count($sku) > 0) {
+        if($sku && count($sku) > 0){
             $cart = $this->_cart;
             $countyrId = $cart->getQuote()->getShippingAddress()->getCountry();
             $itemsVisible = $cart->getQuote()->getAllVisibleItems();
-            foreach ($itemsVisible as $item) {
+            foreach($itemsVisible as $item) {
                 $itemSku = $item->getSku();
-                if ((in_array($itemSku, $sku)) && ($countyrId != 'US')) {
+                if((in_array($itemSku, $sku)) && ($countyrId != 'US')){
                     return true;
                     exit;
-                } else {
+                }else{
                     return false;
-                }
+                }        
             }
-        } else {
+        }else{
             return false;
-        }
+        } 
     }
-    function getCountryData($CountryId)
-    {
+    function getCountryData($CountryId){
         $sku = $this->getExcludedSKu();
-        if ($sku && count($sku) > 0) {
+        if($sku && count($sku) > 0){
             $cart = $this->_cart;
             $countyrId = $CountryId;
             $itemsVisible = $cart->getQuote()->getAllVisibleItems();
-            foreach ($itemsVisible as $item) {
+            foreach($itemsVisible as $item) {
                 $itemSku = $item->getSku();
-                if ((in_array($itemSku, $sku)) && ($countyrId != 'US')) {
+                if((in_array($itemSku, $sku)) && ($countyrId != 'US')){
                     return true;
                     exit;
-                } else {
+                }else{
                     return false;
-                }
+                }        
             }
-        } else {
+        }else{
             return false;
         }
     }
-    function getShippingMessage()
-    {
-        if ($this->getInternationalSkuConfigVal('enable')) {
+    function getShippingMessage(){
+        if($this->getInternationalSkuConfigVal('enable')){
+            // die('jnjnjnjn');
             return $this->getInternationalSkuConfigVal('shippingmessage');
         }
     }
-    function getBaseUrl()
-    {
+    function getBaseUrl(){
         return $this->_storeManager->getStore()->getBaseUrl();
     }
 }
