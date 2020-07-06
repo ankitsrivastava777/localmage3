@@ -28,7 +28,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     public function getBannerConfig()
     {
         $BannerConfig = $this->scopeConfig->getValue(
-            'imageuploader/selectimage/cuatom_image_field',
+            'imageuploader/selectimage/custom_image_field',
             \Magento\Store\Model\ScopeInterface::SCOPE_STORE
         );
         return $BannerConfig;
